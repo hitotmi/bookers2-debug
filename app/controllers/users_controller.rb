@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :ensure_correct_user, only: [:update]
+ before_action :ensure_correct_user, only: [:update, :edit]
 
   def show
     @user = User.find(params[:id])
@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @book = Book.new
   end
   def edit
+    @user = User.find(params[:id])
   end
 
   def update
@@ -30,7 +31,7 @@ class UsersController < ApplicationController
 
   def ensure_correct_user
     @user = User.find(params[:id])
-    unless @user == current_user
+    unless @user.id == current_user.id
       redirect_to user_path(current_user)
     end
   end
